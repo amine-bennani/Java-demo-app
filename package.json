@@ -1,0 +1,13 @@
+{
+  "name": "my-demo-app",
+  "version": "1.0.0",
+  "description": "A simple Node.js demo app",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "devDependencies": {
+    "jest": "^29.3.1"
+  }
+}
+
