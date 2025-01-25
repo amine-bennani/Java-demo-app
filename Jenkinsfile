@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Pull the latest code from GitHub
-                git branch: 'master', url: 'https://github.com/<your-account>/<your-repo>.git'
+                git branch: 'master', url: 'https://github.com/amine-bennani/my-demo-app.git'
             }
         }
 
