@@ -1,14 +1,9 @@
 pipeline {
-    agent any
+    agent {
+    	docker { image 'node:18-alpine' }
+    }
 
     stages {
-        stage('Checkout') {
-            steps {
-                // Pull the latest code from GitHub
-                git branch: 'master', url: 'https://github.com/amine-bennani/my-demo-app.git'
-            }
-        }
-
         stage('Build') {
             steps {
                 echo 'Installing dependencies...'
