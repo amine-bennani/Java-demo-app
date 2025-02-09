@@ -1,0 +1,51 @@
+stages:
+  - build
+  - test
+  - deploy_uat
+  - selenium_test
+  - deploy_production
+
+variables:
+  MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode --errors --fail-at-end --show-version"
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+
+build:
+  stage: build
+  script:
+    - mvn $MAVEN_CLI_OPTS clean package
+
+test:
+  stage: test
+  script:
+    - mvn $MAVEN_CLI_OPTS test
+    - mvn $MAVEN_CLI_OPTS jacoco:report
+  artifacts:
+    reports:
+      junit: target/surefire-reports/TEST-*.xml
+    coverage_report:
+      coverage_format: cobertura
+      path: target/site/jacoco/jacoco.xml
+
+deploy_uat:
+  stage: deploy_uat
+  script:
+    - if [ $(mvn $MAVEN_CLI_OPTS jacoco:check | grep -c "BUILD SUCCESS") -eq 1 ]; then
+        # Deploy application and PostgreSQL to Minikube
+        helm upgrade --install myapp helm/myapp-chart --set image.tag=$CI_COMMIT_SHA;
+      else
+        echo "Code coverage below 80%. Deployment aborted.";
+        exit 1;
+      fi
+
+selenium_test:
+  stage: selenium_test
+  script:
+    - # Run Selenium tests against the UAT environment
+    - mvn $MAVEN_CLI_OPTS verify -Pselenium
+
+deploy_production:
+  stage: deploy_production
+  when: manual
+  script:
+    - # Deploy to Azure
+    - az webapp deployment source config-zip --resource-group <ResourceGroup> --name <AppName> --src target/myapp.zip
