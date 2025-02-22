@@ -86,7 +86,17 @@
         		<source>${maven.compiler.source}</source>
         		<target>${maven.compiler.target}</target>
       		</configuration>
-    	     </plugin>
+	      </plugin>
+	      <plugin>
+        	<groupId>org.apache.maven.plugins</groupId>
+        	<artifactId>maven-surefire-plugin</artifactId>
+        	<version>3.0.0-M7</version>  <!-- or a stable version -->
+        	<configuration>
+          		<!-- For instance, if you want Java 11 or beyond -->
+          		<forkCount>1</forkCount>
+          		<reuseForks>true</reuseForks>
+        	</configuration>
+      	      </plugin>
         </plugins>
     </build>
 </project>
