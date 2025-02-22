@@ -3,7 +3,8 @@ pipeline {
 
     tools {
         // If using Maven, specify the installation name configured in Jenkins:
-        maven "Maven_3.8.1"
+        maven 'my_maven'
+	jdk 'my_jdk'
         // Add JDK if needed:
         // jdk "OpenJDK11"
     }
