@@ -73,6 +73,21 @@ pipeline {
             }
         }
 
+	stage('Install Helm') {
+    	    steps {
+        	sh """
+          	curl -fsSL https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+        	"""
+    	    }
+	}
+	stage('Helm Deploy') {
+    	    steps {
+                sh """
+                helm version
+                helm upgrade --install ...
+        	"""
+            }
+	}
 	stage('Checkout Helm Chart') {
             steps {
                 script {
