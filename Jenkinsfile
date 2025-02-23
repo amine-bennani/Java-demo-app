@@ -1,12 +1,6 @@
 pipeline {
     agent any
     		
-    tools {
-        // If using Maven, specify the installation name configured in Jenkins:
-        // Add JDK if needed:
-        // jdk "OpenJDK11"
-    }
-
     environment {
         // Adjust to match your Docker registry, Helm chart, Azure settings, etc.
         DOCKER_REGISTRY      = "your-docker-registry"  // e.g., "registry.hub.docker.com"
