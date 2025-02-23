@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    }		
+    		
     tools {
         // If using Maven, specify the installation name configured in Jenkins:
         // Add JDK if needed:
