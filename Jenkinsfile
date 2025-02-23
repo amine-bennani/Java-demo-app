@@ -1,15 +1,8 @@
 pipeline {
-    agent {
-    	docker {
-        	image 'docker:23-dind'  // or another Docker-in-Docker image
-            	args '--privileged'
-    	}
-    }
-
+    agent any
+    }		
     tools {
         // If using Maven, specify the installation name configured in Jenkins:
-        maven 'my_maven'
-	jdk 'my_jdk'
         // Add JDK if needed:
         // jdk "OpenJDK11"
     }
