@@ -19,7 +19,8 @@ pipeline {
         K8S_NAMESPACE        = "uat"
         AZURE_WEBAPP_NAME    = "MyAzureWebApp"
         AZURE_RESOURCE_GROUP = "MyResourceGroup"
-    }
+	// If your chart is in a subfolder, adjust HELM_CHART_PATH = "helm-chart/<somefolder>"
+   }
 
     stages {
 
@@ -72,14 +73,15 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+	stage('Checkout Helm Chart') {
             steps {
                 script {
-                    echo "Building Docker image..."
-                    // Make sure your Dockerfile is in the project's root or specify --file path
+                    // Remove any previous clone to ensure a fresh checkout
+                    sh 'rm -rf helm-chart || true'
+                    
+                    // Clone the external Helm repository into a local folder named 'helm-chart'
                     sh """
-                       docker build -t ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${DOCKER_IMAGE_TAG} .
-                       docker push ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${DOCKER_IMAGE_TAG}
+                       git clone https://github.com/amine-bennani/my-app-helm.git helm-chart
                     """
                 }
             }
@@ -89,8 +91,7 @@ pipeline {
             steps {
                 script {
                     echo "Deploying to UAT via Helm on Minikube..."
-                    // Ensure Jenkins has kubectl/helm installed & correct kubeconfig for Minikube
-                    // Example using Helm upgrade/install command:
+                    // Ensure Jenkins has kubectl/helm installed & the correct kubeconfig for Minikube
                     sh """
                        helm upgrade --install ${HELM_RELEASE_NAME} ${HELM_CHART_PATH} \
                            --set image.repository=${DOCKER_REGISTRY}/${DOCKER_IMAGE} \
@@ -98,8 +99,6 @@ pipeline {
                            --namespace ${K8S_NAMESPACE} \
                            --create-namespace
                     """
-                    // The above references your Helm chart values. 
-                    // If you use a values.yaml, set image.repository/tag accordingly.
                 }
             }
         }
