@@ -76,7 +76,11 @@ pipeline {
 	stage('Install Helm') {
     	    steps {
         	sh """
-          	curl -fsSL https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+          	  curl -fsSL https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 -o get_helm.sh
+          	  chmod +x get_helm.sh
+          	  # Force the script to skip 'sudo'
+          	  export USE_SUDO="false"
+          	  ./get_helm.sh
         	"""
     	    }
 	}
