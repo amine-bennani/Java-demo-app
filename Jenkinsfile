@@ -1,8 +1,8 @@
 pipeline {
     agent {
     	docker {
-        	image 'ubuntu:20.04'
-        	args '-u root' // run as root user
+        	image 'docker:23-dind'  // or another Docker-in-Docker image
+            	args '--privileged'
     	}
     }
 
