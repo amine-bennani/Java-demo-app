@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+    	docker {
+        	image 'ubuntu:20.04'
+        	args '-u root' // run as root user
+    	}
+    }
 
     tools {
         // If using Maven, specify the installation name configured in Jenkins:
@@ -79,7 +84,6 @@ pipeline {
           	  curl -fsSL https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 -o get_helm.sh
           	  chmod +x get_helm.sh
           	  # Force the script to skip 'sudo'
-          	  export USE_SUDO="false"
           	  ./get_helm.sh
         	"""
     	    }
