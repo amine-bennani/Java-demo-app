@@ -29,6 +29,12 @@ pipeline {
 
     stages {
 
+    	stage('Inside Docker Agent') {
+      	   steps {
+        	sh 'docker version'
+	        sh 'docker pull ubuntu:20.04'
+      	   }
+        }
         stage('Checkout') {
             steps {
                 // If using a Multibranch Pipeline, Jenkins may auto-checkout. Otherwise:
