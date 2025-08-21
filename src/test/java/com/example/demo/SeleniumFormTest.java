@@ -11,8 +11,8 @@ public class SeleniumFormTest {
 
     @BeforeAll
     public static void setup() {
-        // Assumes chromedriver is installed in PATH
-        driver = new ChromeDriver();
+        System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+        WebDriver driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
 
