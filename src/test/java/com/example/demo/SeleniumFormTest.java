@@ -12,7 +12,14 @@ public class SeleniumFormTest {
     @BeforeAll
     public static void setup() {
         System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
-        WebDriver driver = new ChromeDriver();
+
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless=new");  // Or use --headless if you have older Chrome
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--disable-gpu");
+
+        driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
 
