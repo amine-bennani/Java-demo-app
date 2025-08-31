@@ -1,21 +1,13 @@
-package com.example.demo;
-
-import org.junit.jupiter.api.*;
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import java.time.Duration;
-
 public class SeleniumFormTest {
 
     static WebDriver driver;
 
     @BeforeAll
     public static void setup() {
-        System.setProperty("webdriver.chrome.driver", "/usr/lib/chromium/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
 
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless=new");  // Or use --headless if you have older Chrome
+        options.addArguments("--headless=new");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--disable-gpu");
