@@ -12,7 +12,7 @@ public class SeleniumFormTest {
 
     @BeforeAll
     public static void setup() {
-        System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "/usr/lib/chromium/chromedriver");
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless=new");  // Or use --headless if you have older Chrome
