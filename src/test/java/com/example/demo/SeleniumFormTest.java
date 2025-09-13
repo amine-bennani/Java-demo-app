@@ -1,16 +1,25 @@
+package com.example.demo;
+
+import org.junit.jupiter.api.*;               // BeforeAll, AfterAll, Test, Assertions
+import org.openqa.selenium.*;                // WebDriver, By, WebElement
+import org.openqa.selenium.chrome.*;         // ChromeDriver, ChromeOptions
+import java.time.Duration;
+
 public class SeleniumFormTest {
 
     static WebDriver driver;
 
     @BeforeAll
     public static void setup() {
+        // If you installed Chromium + chromedriver inside the Jenkins build env,
+        // this path should match (examples: /usr/bin/chromedriver or /usr/lib/chromium/chromedriver)
         System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
 
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless=new");
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--disable-gpu");
+        options.addArguments("--headless=new", "--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu");
+
+        // If your Chrome binary path isn’t standard, uncomment and point to it:
+        // options.setBinary("/usr/bin/chromium-browser");
 
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -18,9 +27,7 @@ public class SeleniumFormTest {
 
     @AfterAll
     public static void teardown() {
-        if (driver != null) {
-            driver.quit();
-        }
+        if (driver != null) driver.quit();
     }
 
     @Test
